@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import json
-import html
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,7 +17,7 @@ def clean_title(title):
 
 
 def clean_alt(title):
-    return " ".join(str(title).split()).replace('"', "&quot;")
+    return " ".join(str(title).split()).replace("[", "(").replace("]", ")")
 
 
 def render(records):
@@ -36,24 +35,21 @@ def render(records):
     for record in records:
         title = clean_title(record["title"])
         alt = clean_alt(record["title"])
-        prompt = html.escape(record["prompt"].strip())
+        prompt = record["prompt"].strip()
         source_url = record["source_url"]
         image = record["image"]
 
         lines.append(f"### {title}")
         lines.append("")
-        lines.append("<table>")
-        lines.append("  <tr>")
-        lines.append("    <td width=\"38%\" valign=\"top\">")
-        lines.append(f"      <img src=\"{image}\" width=\"360\" alt=\"{alt}\">")
-        lines.append("    </td>")
-        lines.append("    <td width=\"62%\" valign=\"top\">")
-        lines.append("      <strong>Prompt</strong>")
-        lines.append(f"      <pre>{prompt}</pre>")
-        lines.append(f"      <a href=\"{source_url}\">Original post</a>")
-        lines.append("    </td>")
-        lines.append("  </tr>")
-        lines.append("</table>")
+        lines.append(f"![{alt}]({image})")
+        lines.append("")
+        lines.append("**Prompt:**")
+        lines.append("")
+        lines.append("```text")
+        lines.append(prompt)
+        lines.append("```")
+        lines.append("")
+        lines.append(f"[Original post]({source_url})")
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
