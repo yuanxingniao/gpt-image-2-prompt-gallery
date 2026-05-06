@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import html
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -9,6 +10,15 @@ README = ROOT / "README.md"
 
 def load_records():
     return [json.loads(line) for line in DATA.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def clean_title(title):
+    title = " ".join(str(title).split())
+    return title.replace("|", "\\|")
+
+
+def clean_alt(title):
+    return " ".join(str(title).split()).replace('"', "&quot;")
 
 
 def render(records):
@@ -24,19 +34,26 @@ def render(records):
     lines.append("## Cases")
     lines.append("")
     for record in records:
-        lines.append(f"### {record['title']}")
+        title = clean_title(record["title"])
+        alt = clean_alt(record["title"])
+        prompt = html.escape(record["prompt"].strip())
+        source_url = record["source_url"]
+        image = record["image"]
+
+        lines.append(f"### {title}")
         lines.append("")
-        lines.append(f"[Original post]({record['source_url']})")
-        lines.append("")
-        lines.append("| Output |")
-        lines.append("| :----: |")
-        lines.append(f"| <img src=\"{record['image']}\" width=\"360\" alt=\"{record['title']}\"> |")
-        lines.append("")
-        lines.append("**Prompt:**")
-        lines.append("")
-        lines.append("```text")
-        lines.append(record["prompt"].strip())
-        lines.append("```")
+        lines.append("<table>")
+        lines.append("  <tr>")
+        lines.append("    <td width=\"38%\" valign=\"top\">")
+        lines.append(f"      <img src=\"{image}\" width=\"360\" alt=\"{alt}\">")
+        lines.append("    </td>")
+        lines.append("    <td width=\"62%\" valign=\"top\">")
+        lines.append("      <strong>Prompt</strong>")
+        lines.append(f"      <pre>{prompt}</pre>")
+        lines.append(f"      <a href=\"{source_url}\">Original post</a>")
+        lines.append("    </td>")
+        lines.append("  </tr>")
+        lines.append("</table>")
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
