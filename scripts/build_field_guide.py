@@ -196,7 +196,7 @@ def build_cases(records, annotations):
                 "title": clean_text(record["title"]).replace("GPT Image 2 Prompt Case ", "Case "),
                 "prompt": record["prompt"].strip(),
                 "prompt_preview": clean_text(record["prompt"])[:260],
-                "image": "../" + record["image"],
+                "image": "./" + record["image"],
                 "source_url": record["source_url"],
                 "source_platform": record["source_platform"],
                 "model": record["model"],
