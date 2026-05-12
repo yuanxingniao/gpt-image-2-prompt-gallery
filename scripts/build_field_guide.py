@@ -1117,11 +1117,9 @@ def main():
         raise SystemExit(f"Missing annotations: {', '.join(missing)}")
     DOCS.mkdir(exist_ok=True)
     annotations = write_annotations(records)
-    write_index()
-    write_styles()
     write_app(build_cases(records, annotations))
     print(f"Wrote {ANNOTATIONS.relative_to(ROOT)}")
-    print(f"Wrote {DOCS.relative_to(ROOT)}/index.html, styles.css, app.js")
+    print(f"Wrote {DOCS.relative_to(ROOT)}/app.js")
 
 
 if __name__ == "__main__":

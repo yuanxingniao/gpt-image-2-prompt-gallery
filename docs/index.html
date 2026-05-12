@@ -22,31 +22,17 @@
         <a class="source-link" href="../README.md">Source gallery</a>
       </nav>
 
-      <section class="hero">
-        <p class="eyebrow">GPT Image 2 Use-Case Map</p>
-        <h1>这些爆款提示词，能拿来干什么？</h1>
-        <p class="intro">
-          先看用途，再看案例。这个 Field Guide 把 62 条互联网提示词整理成 9 类实际应用场景，方便创作者、设计师和增长团队快速找到可复用方向。
+      <div class="hero-mini">
+        <h1>GPT-Image2 提示词参考站</h1>
+        <p class="intro-mini">
+          探索 Image 2 的核心生成能力：角色分身、风格转换、产品广告与视觉排版。
         </p>
-      </section>
+      </div>
     </header>
 
     <main>
-      <section class="section usecase-lead" aria-labelledby="usecaseTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Use Cases</p>
-          <h2 id="usecaseTitle">9 个用途族</h2>
-          <p>这一层只回答一个问题：这些 GPT Image 2 prompt 到底可以被拿去做什么。</p>
-        </div>
-        <div class="usecase-grid" id="usecaseGrid"></div>
-      </section>
 
-      <section class="section case-panel" aria-labelledby="explorerTitle">
-        <div class="panel-title">
-          <p class="eyebrow">Case Explorer</p>
-          <h2 id="explorerTitle">案例库</h2>
-          <p>点击上方用途卡或在这里搜索，查看对应案例、摘要、公式和完整 prompt。</p>
-        </div>
+      <section class="section case-panel" aria-label="案例库">
 
         <div class="filters" aria-label="Prompt filters">
           <label class="search-box">
@@ -57,6 +43,10 @@
             <span class="filter-label">用途筛选</span>
             <div class="chip-row" id="usecaseFilters"></div>
           </div>
+          <details class="secondary-filters">
+            <summary>展开高级筛选：语法控制</summary>
+            <div class="chip-row" id="grammarFilters" style="margin-top: 12px;"></div>
+          </details>
           <button class="ghost-button" id="clearFilters" type="button">Clear filters</button>
         </div>
 
@@ -67,17 +57,7 @@
         <div class="case-grid" id="caseGrid"></div>
       </section>
 
-      <section class="section grammar-section" aria-labelledby="grammarTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Prompt Grammar</p>
-          <h2 id="grammarTitle">语法控制层</h2>
-          <p>用途之后，再看 prompt 是怎么控制图像的：保留、构图、光线、色彩、文字、分镜和材质。</p>
-        </div>
-        <div class="grammar-panel">
-          <span class="filter-label">语法模块筛选</span>
-          <div class="chip-row" id="grammarFilters"></div>
-        </div>
-      </section>
+
 
       <section class="section graph-appendix" aria-labelledby="graphTitle">
         <div class="section-heading">
@@ -92,6 +72,14 @@
           </div>
           <svg id="constellation" role="img" aria-label="Clickable prompt use-case graph"></svg>
         </div>
+      </section>
+      <section class="section usecase-lead" aria-labelledby="usecaseTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Use Cases</p>
+          <h2 id="usecaseTitle">9 个用途族</h2>
+          <p>这一层只回答一个问题：这些 GPT Image 2 prompt 到底可以被拿去做什么。</p>
+        </div>
+        <div class="usecase-grid" id="usecaseGrid"></div>
       </section>
     </main>
 
