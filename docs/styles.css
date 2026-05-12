@@ -177,6 +177,14 @@ h1, h2, h3, p { margin-top: 0; }
   font-weight: 600;
 }
 
+.brand-by__tagline {
+  margin-left: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
 .section {
   padding: 44px clamp(18px, 5vw, 72px);
 }
