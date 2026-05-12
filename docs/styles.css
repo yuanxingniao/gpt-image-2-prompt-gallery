@@ -1,0 +1,712 @@
+/* ============================================================
+   GPT Image 2 Prompt Gallery — creatok.ai 视觉风格
+   黑底 · 橙红配色 · 大圆角矩形 · 半透明层
+   ============================================================ */
+
+:root {
+  /* ---- 背景层 ---- */
+  --bg:           #0f0f0f;           /* 页面底色 */
+  --surface:      #1a1a1a;           /* 卡片/面板 */
+  --surface-mid:  rgba(30,30,30,0.7);/* 半透明面板 */
+  --surface-soft: rgba(255,255,255,0.04); /* 极淡 hover 层 */
+
+  /* ---- 边框 ---- */
+  --line:         rgba(255,255,255,0.09);
+  --line-strong:  rgba(255,255,255,0.18);
+
+  /* ---- 文字 ---- */
+  --ink:          #f4f4f5;           /* zinc-100 主文字 */
+  --muted:        #a1a1aa;           /* zinc-400 副文字 */
+
+  /* ---- 橙红 Accent ---- */
+  --accent:       #ea580c;           /* orange-600 */
+  --accent-2:     #f97316;           /* orange-500，用于渐变 */
+  --accent-soft:  rgba(234,88,12,0.15);
+  --accent-hover: #c2410c;           /* 深一档 hover */
+
+  /* ---- 其他 ---- */
+  --shadow:       0 4px 32px rgba(0,0,0,0.6);
+  --shadow-card:  0 2px 16px rgba(0,0,0,0.5);
+  --radius:       20px;
+}
+
+/* ============================================================
+   Reset & Base
+   ============================================================ */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    /* 左上 & 右上 极淡橙红晕光 */
+    radial-gradient(ellipse 60% 40% at 5% 0%,  rgba(234,88,12,0.07),  transparent),
+    radial-gradient(ellipse 50% 35% at 95% 5%, rgba(249,115,22,0.05), transparent),
+    var(--bg);
+  font-family: 'Inter', ui-sans-serif, 'PingFang SC', 'Noto Sans SC', sans-serif;
+  overflow-x: hidden;
+}
+
+button, input { font: inherit; }
+
+h1, h2, h3, p { margin-top: 0; }
+
+/* ============================================================
+   Site Header / Topbar  —  磨玻璃导航
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0 clamp(18px, 5vw, 72px);
+  background: rgba(15,15,15,0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar,
+.section,
+.footer {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 0;
+}
+
+.brand, .source-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.brand span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* 橙红品牌标识 badge */
+.brand-mark {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  font-size: 12px;
+  font-weight: 900;
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px rgba(234,88,12,0.4);
+}
+
+.topbar-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.topbar-meta strong { color: var(--ink); }
+
+/* ============================================================
+   Buttons  —  source-link & ghost-button
+   ============================================================ */
+.source-link,
+.ghost-button {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.source-link:hover,
+.ghost-button:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-2);
+}
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero-mini {
+  max-width: 1440px;
+  margin: clamp(36px, 5vw, 64px) auto 0;
+  padding: 0 clamp(18px, 5vw, 72px);
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-mini h1 {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.intro-mini {
+  max-width: 700px;
+  margin: 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* ============================================================
+   Sections
+   ============================================================ */
+.section {
+  padding: 44px clamp(18px, 5vw, 72px);
+}
+
+.usecase-lead {
+  padding-top: 12px;
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.34fr) minmax(0, 0.66fr);
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.panel-title {
+  margin-bottom: 24px;
+}
+
+.panel-title h2,
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+.panel-title h2 {
+  margin: 8px 0 12px;
+}
+
+.panel-title p:last-child,
+.section-heading p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   Use-case 卡片
+   ============================================================ */
+.usecase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.usecase-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  min-height: 250px;
+  padding: 24px;
+  transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.usecase-card:hover,
+.usecase-card.active {
+  border-color: var(--accent);
+  background: linear-gradient(160deg, rgba(234,88,12,0.08), var(--surface));
+  box-shadow: 0 0 0 1px var(--accent), var(--shadow-card);
+  transform: translateY(-3px);
+}
+
+.usecase-card .index {
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.usecase-card h3 {
+  margin: 18px 0 10px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.usecase-card p {
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.formula {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* ============================================================
+   筛选器面板
+   ============================================================ */
+.filters,
+.grammar-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--surface);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.search-box {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.search-box input {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  color: var(--ink);
+  outline: none;
+  padding: 12px 14px;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.search-box input::placeholder { color: var(--muted); }
+
+.search-box input:focus {
+  border-color: var(--accent);
+  background: rgba(234,88,12,0.06);
+}
+
+.filter-label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Chip 筛选标签
+   ============================================================ */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: var(--muted);
+  cursor: pointer;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.chip:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--ink);
+}
+
+.chip.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 10px rgba(234,88,12,0.35);
+}
+
+/* ============================================================
+   结果状态栏
+   ============================================================ */
+.results-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 20px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.results-bar p { margin: 0; }
+#activeFilters { color: var(--accent); font-weight: 800; }
+
+/* ============================================================
+   案例 Grid / Card
+   ============================================================ */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.case-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.6);
+  transform: translateY(-2px);
+}
+
+/* 图片区 */
+.thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #222;
+  overflow: hidden;
+}
+
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.case-card:hover .thumb img {
+  transform: scale(1.03);
+}
+
+/* 图片上的 badge */
+.badge {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  border-radius: 999px;
+  background: rgba(15,15,15,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* 卡片内容 */
+.case-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+}
+
+.case-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.summary,
+.preview {
+  color: var(--muted);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.summary {
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.preview {
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+/* Tags */
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  border-radius: 999px;
+  background: rgba(234,88,12,0.12);
+  border: 1px solid rgba(234,88,12,0.2);
+  color: #fb923c;       /* orange-400 */
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* 卡片底部操作 */
+.case-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.case-actions a {
+  color: var(--accent-2);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.case-actions a:hover {
+  color: white;
+}
+
+/* ============================================================
+   Details / Summary（高级筛选展开）
+   ============================================================ */
+details {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+}
+
+summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  list-style: none;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+details.secondary-filters {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-top: 8px;
+}
+
+details.secondary-filters summary {
+  color: var(--muted);
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+details.secondary-filters summary:hover {
+  color: var(--accent-2);
+}
+
+/* ============================================================
+   pre 代码块
+   ============================================================ */
+pre {
+  max-height: 340px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #d4d4d4;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   图表面板（SVG 星图）
+   ============================================================ */
+.graph-panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#constellation {
+  display: block;
+  width: 100%;
+  height: 640px;
+}
+
+/* SVG 图表元素 */
+.graph-link { stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+.graph-node { cursor: pointer; transition: opacity 0.2s ease; }
+.graph-node:hover text { fill: var(--accent-2); }
+.graph-node circle { stroke: rgba(255,255,255,0.2); stroke-width: 1; fill: #1e1e1e; }
+.graph-node.active circle { stroke: var(--accent); stroke-width: 3; fill: rgba(234,88,12,0.15); }
+.graph-label {
+  fill: var(--ink);
+  font-family: 'Inter', ui-sans-serif, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+.graph-small { fill: var(--muted); font-size: 11px; font-weight: 600; }
+
+.graph-appendix {
+  padding-bottom: 26px;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer {
+  padding: 26px clamp(18px, 5vw, 72px) 44px;
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid var(--line);
+}
+
+/* ============================================================
+   "Secondary use case" 标签（来自 app.js 动态注入）
+   ============================================================ */
+.secondary-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 1280px) {
+  .case-grid,
+  .usecase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 920px) {
+  .section-heading,
+  .panel-title {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .case-grid,
+  .usecase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .brand {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .source-link { display: none; }
+
+  .hero-mini {
+    margin-top: 32px;
+  }
+
+  .hero-mini h1 {
+    font-size: clamp(22px, 8vw, 32px);
+  }
+
+  .case-grid, .usecase-grid { grid-template-columns: 1fr; }
+  .results-bar { align-items: flex-start; flex-direction: column; }
+  #constellation { height: 480px; }
+}
