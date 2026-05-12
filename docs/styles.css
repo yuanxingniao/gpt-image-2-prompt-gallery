@@ -317,12 +317,12 @@ h1, h2, h3, p { margin-top: 0; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+  align-items: start;
 }
 
 .case-card {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
   border: 1px solid var(--line);
   border-radius: 22px;
   background: white;
