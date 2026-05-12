@@ -241,20 +241,11 @@ def write_index():
     </header>
 
     <main>
-      <section class="section usecase-lead" aria-labelledby="usecaseTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Use Cases</p>
-          <h2 id="usecaseTitle">9 个用途族</h2>
-          <p>这一层只回答一个问题：这些 GPT Image 2 prompt 到底可以被拿去做什么。</p>
-        </div>
-        <div class="usecase-grid" id="usecaseGrid"></div>
-      </section>
-
       <section class="section case-panel" aria-labelledby="explorerTitle">
         <div class="panel-title">
           <p class="eyebrow">Case Explorer</p>
           <h2 id="explorerTitle">案例库</h2>
-          <p>点击上方用途卡或在这里搜索，查看对应案例、摘要、公式和完整 prompt。</p>
+          <p>通过下方筛选器或搜索，查看对应案例、摘要、公式和完整 prompt。</p>
         </div>
 
         <div class="filters" aria-label="Prompt filters">
@@ -462,9 +453,7 @@ h1, h2, h3, p { margin-top: 0; }
   padding: 44px clamp(18px, 5vw, 72px);
 }
 
-.usecase-lead {
-  padding-top: 12px;
-}
+
 
 .section-heading,
 .panel-title {
@@ -492,50 +481,7 @@ h1, h2, h3, p { margin-top: 0; }
   line-height: 1.7;
 }
 
-.usecase-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
 
-.usecase-card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.84);
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  min-height: 265px;
-  padding: 24px;
-  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-}
-
-.usecase-card:hover,
-.usecase-card.active {
-  border-color: var(--accent);
-  background: linear-gradient(180deg, white, var(--surface-soft));
-  transform: translateY(-3px);
-}
-
-.usecase-card .index {
-  color: var(--accent);
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 12px;
-  font-weight: 900;
-}
-
-.usecase-card h3 {
-  margin: 20px 0 12px;
-  font-size: 28px;
-  letter-spacing: -0.04em;
-}
-
-.usecase-card p {
-  margin-bottom: 18px;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.65;
-  overflow-wrap: anywhere;
-}
 
 .formula {
   border-top: 1px solid var(--line);
@@ -887,7 +833,7 @@ pre {
     font-size: 16px;
   }
 
-  .case-grid, .usecase-grid { grid-template-columns: 1fr; }
+  .case-grid { grid-template-columns: 1fr; }
   .results-bar { align-items: flex-start; flex-direction: column; }
   #constellation { height: 480px; }
 }
@@ -970,28 +916,7 @@ function sortedCases() {{
   return [...primary.sort(sort), ...secondary.sort(sort)];
 }}
 
-function renderUseCases() {{
-  byId("usecaseGrid").innerHTML = FIELD_GUIDE.useCases
-    .map((item, index) => {{
-      const count = FIELD_GUIDE.cases.filter(
-        (caseItem) => caseItem.primary_use_case === item.id || caseItem.secondary_use_cases.includes(item.id)
-      ).length;
-      return `<article class="usecase-card ${{state.useCase === item.id ? "active" : ""}}" data-usecase="${{item.id}}" tabindex="0">
-        <span class="index">${{String(index + 1).padStart(2, "0")}} / ${{count}} cases</span>
-        <h3>${{item.name}}</h3>
-        <p>${{item.short}}</p>
-        <div class="formula">${{item.formula}}</div>
-      </article>`;
-    }})
-    .join("");
 
-  document.querySelectorAll(".usecase-card").forEach((card) => {{
-    card.addEventListener("click", () => setUseCase(card.dataset.usecase, true));
-    card.addEventListener("keydown", (event) => {{
-      if (event.key === "Enter" || event.key === " ") setUseCase(card.dataset.usecase, true);
-    }});
-  }});
-}}
 
 function renderFilterChips() {{
   byId("usecaseFilters").innerHTML = [
@@ -1150,7 +1075,6 @@ function renderGraphNode(item) {{
 
 function renderAll() {{
   byId("caseCount").textContent = FIELD_GUIDE.cases.length;
-  renderUseCases();
   renderFilterChips();
   renderCases();
   renderGraph();

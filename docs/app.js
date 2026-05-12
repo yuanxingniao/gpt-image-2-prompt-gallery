@@ -66,28 +66,7 @@ function sortedCases() {
   return [...primary.sort(sort), ...secondary.sort(sort)];
 }
 
-function renderUseCases() {
-  byId("usecaseGrid").innerHTML = FIELD_GUIDE.useCases
-    .map((item, index) => {
-      const count = FIELD_GUIDE.cases.filter(
-        (caseItem) => caseItem.primary_use_case === item.id || caseItem.secondary_use_cases.includes(item.id)
-      ).length;
-      return `<article class="usecase-card ${state.useCase === item.id ? "active" : ""}" data-usecase="${item.id}" tabindex="0">
-        <span class="index">${String(index + 1).padStart(2, "0")} / ${count} cases</span>
-        <h3>${item.name}</h3>
-        <p>${item.short}</p>
-        <div class="formula">${item.formula}</div>
-      </article>`;
-    })
-    .join("");
 
-  document.querySelectorAll(".usecase-card").forEach((card) => {
-    card.addEventListener("click", () => setUseCase(card.dataset.usecase, true));
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") setUseCase(card.dataset.usecase, true);
-    });
-  });
-}
 
 function renderFilterChips() {
   byId("usecaseFilters").innerHTML = [
@@ -246,7 +225,6 @@ function renderGraphNode(item) {
 
 function renderAll() {
   byId("caseCount").textContent = FIELD_GUIDE.cases.length;
-  renderUseCases();
   renderFilterChips();
   renderCases();
   renderGraph();
