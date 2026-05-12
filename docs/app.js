@@ -163,71 +163,12 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-function renderGraph() {
-  const svg = byId("constellation");
-  const width = svg.clientWidth || 720;
-  const height = svg.clientHeight || 570;
-  const cx = width / 2;
-  const cy = height / 2;
-  const useRadius = Math.min(width, height) * 0.35;
-  const grammarRadius = Math.min(width, height) * 0.19;
-  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
 
-  const useNodes = FIELD_GUIDE.useCases.map((item, index) => {
-    const angle = -Math.PI / 2 + (index / FIELD_GUIDE.useCases.length) * Math.PI * 2;
-    return { ...item, type: "usecase", x: cx + Math.cos(angle) * useRadius, y: cy + Math.sin(angle) * useRadius };
-  });
-  const grammarNodes = FIELD_GUIDE.grammarModules.map((item, index) => {
-    const angle = -Math.PI / 2 + ((index + 0.5) / FIELD_GUIDE.grammarModules.length) * Math.PI * 2;
-    return { ...item, type: "grammar", x: cx + Math.cos(angle) * grammarRadius, y: cy + Math.sin(angle) * grammarRadius };
-  });
-
-  const links = [];
-  useNodes.forEach((useNode) => {
-    const relatedTags = new Set();
-    FIELD_GUIDE.cases
-      .filter((item) => item.primary_use_case === useNode.id || item.secondary_use_cases.includes(useNode.id))
-      .forEach((item) => item.grammar_tags.forEach((tag) => relatedTags.add(tag)));
-    grammarNodes
-      .filter((grammarNode) => relatedTags.has(grammarNode.id))
-      .forEach((grammarNode) => links.push([useNode, grammarNode]));
-  });
-
-  svg.innerHTML = `
-    <g>${links
-      .map(([a, b]) => `<line class="graph-link" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" />`)
-      .join("")}</g>
-    <circle cx="${cx}" cy="${cy}" r="${Math.max(54, grammarRadius * 0.32)}" fill="rgba(23, 21, 18, 0.92)" />
-    <text x="${cx}" y="${cy - 5}" fill="#f7f3ea" text-anchor="middle" font-family="ui-sans-serif, Avenir Next, sans-serif" font-size="13" font-weight="900">GPT Image 2</text>
-    <text x="${cx}" y="${cy + 14}" fill="#d7cdbb" text-anchor="middle" font-family="ui-sans-serif, Avenir Next, sans-serif" font-size="11" font-weight="700">Prompt Atlas</text>
-    <g>${grammarNodes.map(renderGraphNode).join("")}</g>
-    <g>${useNodes.map(renderGraphNode).join("")}</g>
-  `;
-
-  svg.querySelectorAll(".graph-node").forEach((node) => {
-    node.addEventListener("click", () => {
-      if (node.dataset.type === "usecase") setUseCase(node.dataset.id);
-      if (node.dataset.type === "grammar") setGrammar(node.dataset.id);
-    });
-  });
-}
-
-function renderGraphNode(item) {
-  const active = item.type === "usecase" ? state.useCase === item.id : state.grammar === item.id;
-  const radius = item.type === "usecase" ? 34 : 22;
-  const fill = item.type === "usecase" ? "rgba(255, 252, 245, 0.95)" : "rgba(20, 92, 88, 0.1)";
-  const labelClass = item.type === "usecase" ? "graph-label" : "graph-label graph-small";
-  return `<g class="graph-node ${active ? "active" : ""}" data-type="${item.type}" data-id="${item.id}">
-    <circle cx="${item.x}" cy="${item.y}" r="${radius}" fill="${fill}" />
-    <text class="${labelClass}" x="${item.x}" y="${item.y + radius + 18}">${item.name}</text>
-  </g>`;
-}
 
 function renderAll() {
   byId("caseCount").textContent = FIELD_GUIDE.cases.length;
   renderFilterChips();
   renderCases();
-  renderGraph();
 }
 
 byId("searchInput").addEventListener("input", (event) => {
@@ -235,7 +176,5 @@ byId("searchInput").addEventListener("input", (event) => {
   renderCases();
 });
 byId("clearFilters").addEventListener("click", clearFilters);
-byId("resetGraph").addEventListener("click", clearFilters);
-window.addEventListener("resize", () => renderGraph());
 
 renderAll();

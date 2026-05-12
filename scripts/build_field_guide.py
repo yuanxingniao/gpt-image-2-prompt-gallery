@@ -279,20 +279,7 @@ def write_index():
         </div>
       </section>
 
-      <section class="section graph-appendix" aria-labelledby="graphTitle">
-        <div class="section-heading">
-          <p class="eyebrow">Graph Appendix</p>
-          <h2 id="graphTitle">关系图附录</h2>
-          <p>如果想看用途族和语法模块之间的连接，可以在这里查看。点击节点会同步筛选案例库。</p>
-        </div>
-        <div class="graph-panel">
-          <div class="panel-header">
-            <span>Use-case constellation</span>
-            <button class="ghost-button" id="resetGraph" type="button">Reset</button>
-          </div>
-          <svg id="constellation" role="img" aria-label="Clickable prompt use-case graph"></svg>
-        </div>
-      </section>
+
     </main>
 
     <footer class="footer">
@@ -745,49 +732,7 @@ pre {
   line-height: 1.55;
 }
 
-.graph-panel {
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: white;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
 
-.panel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--line);
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-#constellation {
-  display: block;
-  width: 100%;
-  height: 640px;
-}
-
-.graph-link { stroke: rgba(21, 19, 15, 0.15); stroke-width: 1; }
-.graph-node { cursor: pointer; transition: opacity 0.2s ease; }
-.graph-node:hover text { fill: var(--accent); }
-.graph-node circle { stroke: rgba(21, 19, 15, 0.24); stroke-width: 1; }
-.graph-node.active circle { stroke: var(--accent); stroke-width: 3; }
-.graph-label {
-  fill: var(--ink);
-  font-family: ui-sans-serif, "Avenir Next", "Noto Sans SC", sans-serif;
-  font-size: 13px;
-  font-weight: 850;
-  text-anchor: middle;
-}
-.graph-small { fill: var(--muted); font-size: 11px; font-weight: 750; }
-
-.graph-appendix {
-  padding-bottom: 26px;
-}
 
 .footer {
   padding: 26px clamp(18px, 5vw, 72px) 44px;
@@ -835,7 +780,6 @@ pre {
 
   .case-grid { grid-template-columns: 1fr; }
   .results-bar { align-items: flex-start; flex-direction: column; }
-  #constellation { height: 480px; }
 }
 """
     (DOCS / "styles.css").write_text(css, encoding="utf-8")
@@ -1013,71 +957,12 @@ function escapeHtml(value) {{
     .replaceAll("'", "&#039;");
 }}
 
-function renderGraph() {{
-  const svg = byId("constellation");
-  const width = svg.clientWidth || 720;
-  const height = svg.clientHeight || 570;
-  const cx = width / 2;
-  const cy = height / 2;
-  const useRadius = Math.min(width, height) * 0.35;
-  const grammarRadius = Math.min(width, height) * 0.19;
-  svg.setAttribute("viewBox", `0 0 ${{width}} ${{height}}`);
 
-  const useNodes = FIELD_GUIDE.useCases.map((item, index) => {{
-    const angle = -Math.PI / 2 + (index / FIELD_GUIDE.useCases.length) * Math.PI * 2;
-    return {{ ...item, type: "usecase", x: cx + Math.cos(angle) * useRadius, y: cy + Math.sin(angle) * useRadius }};
-  }});
-  const grammarNodes = FIELD_GUIDE.grammarModules.map((item, index) => {{
-    const angle = -Math.PI / 2 + ((index + 0.5) / FIELD_GUIDE.grammarModules.length) * Math.PI * 2;
-    return {{ ...item, type: "grammar", x: cx + Math.cos(angle) * grammarRadius, y: cy + Math.sin(angle) * grammarRadius }};
-  }});
-
-  const links = [];
-  useNodes.forEach((useNode) => {{
-    const relatedTags = new Set();
-    FIELD_GUIDE.cases
-      .filter((item) => item.primary_use_case === useNode.id || item.secondary_use_cases.includes(useNode.id))
-      .forEach((item) => item.grammar_tags.forEach((tag) => relatedTags.add(tag)));
-    grammarNodes
-      .filter((grammarNode) => relatedTags.has(grammarNode.id))
-      .forEach((grammarNode) => links.push([useNode, grammarNode]));
-  }});
-
-  svg.innerHTML = `
-    <g>${{links
-      .map(([a, b]) => `<line class="graph-link" x1="${{a.x}}" y1="${{a.y}}" x2="${{b.x}}" y2="${{b.y}}" />`)
-      .join("")}}</g>
-    <circle cx="${{cx}}" cy="${{cy}}" r="${{Math.max(54, grammarRadius * 0.32)}}" fill="rgba(23, 21, 18, 0.92)" />
-    <text x="${{cx}}" y="${{cy - 5}}" fill="#f7f3ea" text-anchor="middle" font-family="ui-sans-serif, Avenir Next, sans-serif" font-size="13" font-weight="900">GPT Image 2</text>
-    <text x="${{cx}}" y="${{cy + 14}}" fill="#d7cdbb" text-anchor="middle" font-family="ui-sans-serif, Avenir Next, sans-serif" font-size="11" font-weight="700">Prompt Atlas</text>
-    <g>${{grammarNodes.map(renderGraphNode).join("")}}</g>
-    <g>${{useNodes.map(renderGraphNode).join("")}}</g>
-  `;
-
-  svg.querySelectorAll(".graph-node").forEach((node) => {{
-    node.addEventListener("click", () => {{
-      if (node.dataset.type === "usecase") setUseCase(node.dataset.id);
-      if (node.dataset.type === "grammar") setGrammar(node.dataset.id);
-    }});
-  }});
-}}
-
-function renderGraphNode(item) {{
-  const active = item.type === "usecase" ? state.useCase === item.id : state.grammar === item.id;
-  const radius = item.type === "usecase" ? 34 : 22;
-  const fill = item.type === "usecase" ? "rgba(255, 252, 245, 0.95)" : "rgba(20, 92, 88, 0.1)";
-  const labelClass = item.type === "usecase" ? "graph-label" : "graph-label graph-small";
-  return `<g class="graph-node ${{active ? "active" : ""}}" data-type="${{item.type}}" data-id="${{item.id}}">
-    <circle cx="${{item.x}}" cy="${{item.y}}" r="${{radius}}" fill="${{fill}}" />
-    <text class="${{labelClass}}" x="${{item.x}}" y="${{item.y + radius + 18}}">${{item.name}}</text>
-  </g>`;
-}}
 
 function renderAll() {{
   byId("caseCount").textContent = FIELD_GUIDE.cases.length;
   renderFilterChips();
   renderCases();
-  renderGraph();
 }}
 
 byId("searchInput").addEventListener("input", (event) => {{
@@ -1085,8 +970,6 @@ byId("searchInput").addEventListener("input", (event) => {{
   renderCases();
 }});
 byId("clearFilters").addEventListener("click", clearFilters);
-byId("resetGraph").addEventListener("click", clearFilters);
-window.addEventListener("resize", () => renderGraph());
 
 renderAll();
 """
