@@ -241,7 +241,7 @@ h1, h2, h3, p { margin-top: 0; }
    ============================================================ */
 .usecase-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
   gap: 16px;
 }
 
@@ -401,7 +401,7 @@ h1, h2, h3, p { margin-top: 0; }
    ============================================================ */
 .case-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: 16px;
   align-items: start;
 }
@@ -665,23 +665,11 @@ pre {
 /* ============================================================
    Responsive
    ============================================================ */
-@media (max-width: 1280px) {
-  .case-grid,
-  .usecase-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 920px) {
   .section-heading,
   .panel-title {
     grid-template-columns: 1fr;
     gap: 12px;
-  }
-
-  .case-grid,
-  .usecase-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
