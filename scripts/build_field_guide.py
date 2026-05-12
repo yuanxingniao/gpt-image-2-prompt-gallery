@@ -624,7 +624,7 @@ h1, h2, h3, p { margin-top: 0; }
 
 .case-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -644,19 +644,9 @@ h1, h2, h3, p { margin-top: 0; }
   aspect-ratio: 4 / 3;
   background: #e5eaf2;
   overflow: hidden;
-  /* Safari 化解 aspect-ratio 在 grid 内高度崩塌 */
-  min-height: 0;
-}
-
-.thumb::before {
-  content: "";
-  display: block;
-  padding-top: 75%; /* 4:3 fallback for older Safari */
 }
 
 .thumb img {
-  position: absolute;
-  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -850,11 +840,23 @@ pre {
   font-size: 12px;
 }
 
+@media (max-width: 1280px) {
+  .case-grid,
+  .usecase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 920px) {
   .section-heading,
   .panel-title {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .case-grid,
+  .usecase-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

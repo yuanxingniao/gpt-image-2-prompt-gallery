@@ -1,38 +1,18 @@
-/* ============================================================
-   GPT Image 2 Prompt Gallery — creatok.ai 视觉风格
-   黑底 · 橙红配色 · 大圆角矩形 · 半透明层
-   ============================================================ */
-
 :root {
-  /* ---- 背景层 ---- */
-  --bg:           #0f0f0f;           /* 页面底色 */
-  --surface:      #1a1a1a;           /* 卡片/面板 */
-  --surface-mid:  rgba(30,30,30,0.7);/* 半透明面板 */
-  --surface-soft: rgba(255,255,255,0.04); /* 极淡 hover 层 */
-
-  /* ---- 边框 ---- */
-  --line:         rgba(255,255,255,0.09);
-  --line-strong:  rgba(255,255,255,0.18);
-
-  /* ---- 文字 ---- */
-  --ink:          #f4f4f5;           /* zinc-100 主文字 */
-  --muted:        #a1a1aa;           /* zinc-400 副文字 */
-
-  /* ---- 橙红 Accent ---- */
-  --accent:       #ea580c;           /* orange-600 */
-  --accent-2:     #f97316;           /* orange-500，用于渐变 */
-  --accent-soft:  rgba(234,88,12,0.15);
-  --accent-hover: #c2410c;           /* 深一档 hover */
-
-  /* ---- 其他 ---- */
-  --shadow:       0 4px 32px rgba(0,0,0,0.6);
-  --shadow-card:  0 2px 16px rgba(0,0,0,0.5);
-  --radius:       20px;
+  --ink: #111827;
+  --muted: #657083;
+  --paper: #f6f8fb;
+  --surface: #ffffff;
+  --surface-soft: #eef4ff;
+  --line: rgba(17, 24, 39, 0.1);
+  --line-strong: rgba(17, 24, 39, 0.2);
+  --accent: #2563eb;
+  --accent-2: #0f9f8f;
+  --accent-soft: rgba(37, 99, 235, 0.1);
+  --shadow: 0 18px 50px rgba(31, 41, 55, 0.08);
+  --radius: 24px;
 }
 
-/* ============================================================
-   Reset & Base
-   ============================================================ */
 * { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
@@ -41,11 +21,10 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    /* 左上 & 右上 极淡橙红晕光 */
-    radial-gradient(ellipse 60% 40% at 5% 0%,  rgba(234,88,12,0.07),  transparent),
-    radial-gradient(ellipse 50% 35% at 95% 5%, rgba(249,115,22,0.05), transparent),
-    var(--bg);
-  font-family: 'Inter', ui-sans-serif, 'PingFang SC', 'Noto Sans SC', sans-serif;
+    radial-gradient(circle at 15% 0%, rgba(37, 99, 235, 0.11), transparent 30rem),
+    radial-gradient(circle at 90% 8%, rgba(15, 159, 143, 0.11), transparent 28rem),
+    var(--paper);
+  font-family: ui-sans-serif, "Avenir Next", "Noto Sans SC", "PingFang SC", sans-serif;
   overflow-x: hidden;
 }
 
@@ -53,18 +32,8 @@ button, input { font: inherit; }
 
 h1, h2, h3, p { margin-top: 0; }
 
-/* ============================================================
-   Site Header / Topbar  —  磨玻璃导航
-   ============================================================ */
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 0 clamp(18px, 5vw, 72px);
-  background: rgba(15,15,15,0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  padding: 22px clamp(18px, 5vw, 72px) 0;
 }
 
 .topbar,
@@ -79,7 +48,6 @@ h1, h2, h3, p { margin-top: 0; }
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 14px 0;
 }
 
 .brand, .source-link {
@@ -101,19 +69,15 @@ h1, h2, h3, p { margin-top: 0; }
   overflow-wrap: anywhere;
 }
 
-/* 橙红品牌标识 badge */
 .brand-mark {
   display: grid;
   width: 36px;
   height: 36px;
   place-items: center;
-  border-radius: 10px;
+  border-radius: 12px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: white;
   font-size: 12px;
-  font-weight: 900;
-  flex-shrink: 0;
-  box-shadow: 0 2px 12px rgba(234,88,12,0.4);
 }
 
 .topbar-meta {
@@ -123,57 +87,44 @@ h1, h2, h3, p { margin-top: 0; }
   color: var(--muted);
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 .topbar-meta strong { color: var(--ink); }
 
-/* ============================================================
-   Buttons  —  source-link & ghost-button
-   ============================================================ */
 .source-link,
 .ghost-button {
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.68);
   color: var(--ink);
   cursor: pointer;
   font-size: 13px;
-  font-weight: 600;
-  padding: 8px 14px;
-  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
-.source-link:hover,
-.ghost-button:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent-2);
+.source-link,
+.ghost-button {
+  padding: 9px 14px;
 }
 
-/* ============================================================
-   Hero
-   ============================================================ */
 .hero-mini {
   max-width: 1440px;
-  margin: clamp(36px, 5vw, 64px) auto 0;
-  padding: 0 clamp(18px, 5vw, 72px);
+  margin: clamp(24px, 4vw, 48px) auto 0;
   text-align: left;
 }
 
 .eyebrow {
   margin: 0 0 12px;
   color: var(--accent);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .hero-mini h1 {
-  margin: 0 0 16px;
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 800;
+  margin: 0 0 14px;
+  font-family: ui-serif, Georgia, "Times New Roman", "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(28px, 4vw, 42px);
   letter-spacing: -0.04em;
   line-height: 1.1;
   color: var(--ink);
@@ -181,7 +132,7 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .intro-mini {
-  max-width: 700px;
+  max-width: 760px;
   margin: 0;
   padding-left: 14px;
   border-left: 3px solid var(--accent);
@@ -191,9 +142,6 @@ h1, h2, h3, p { margin-top: 0; }
   overflow-wrap: anywhere;
 }
 
-/* ============================================================
-   Sections
-   ============================================================ */
 .section {
   padding: 44px clamp(18px, 5vw, 72px);
 }
@@ -217,11 +165,10 @@ h1, h2, h3, p { margin-top: 0; }
 .panel-title h2,
 .section-heading h2 {
   margin: 0;
-  font-size: clamp(28px, 4vw, 52px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
+  font-family: ui-serif, Georgia, "Times New Roman", "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(32px, 4.8vw, 64px);
+  letter-spacing: -0.045em;
   line-height: 1.05;
-  color: var(--ink);
 }
 
 .panel-title h2 {
@@ -236,31 +183,27 @@ h1, h2, h3, p { margin-top: 0; }
   line-height: 1.7;
 }
 
-/* ============================================================
-   Use-case 卡片
-   ============================================================ */
 .usecase-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
 .usecase-card {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow-card);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: var(--shadow);
   cursor: pointer;
-  min-height: 250px;
+  min-height: 265px;
   padding: 24px;
-  transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
 .usecase-card:hover,
 .usecase-card.active {
   border-color: var(--accent);
-  background: linear-gradient(160deg, rgba(234,88,12,0.08), var(--surface));
-  box-shadow: 0 0 0 1px var(--accent), var(--shadow-card);
+  background: linear-gradient(180deg, white, var(--surface-soft));
   transform: translateY(-3px);
 }
 
@@ -272,33 +215,28 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .usecase-card h3 {
-  margin: 18px 0 10px;
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--ink);
+  margin: 20px 0 12px;
+  font-size: 28px;
+  letter-spacing: -0.04em;
 }
 
 .usecase-card p {
   margin-bottom: 18px;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
 
 .formula {
   border-top: 1px solid var(--line);
-  padding-top: 14px;
-  color: var(--muted);
-  font-size: 13px;
+  padding-top: 16px;
+  color: var(--ink);
+  font-size: 14px;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
-/* ============================================================
-   筛选器面板
-   ============================================================ */
 .filters,
 .grammar-panel {
   display: grid;
@@ -306,9 +244,9 @@ h1, h2, h3, p { margin-top: 0; }
   margin-bottom: 18px;
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: var(--surface);
-  padding: 18px 20px;
-  box-shadow: var(--shadow-card);
+  background: white;
+  padding: 18px;
+  box-shadow: var(--shadow);
 }
 
 .search-box {
@@ -316,40 +254,29 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 8px;
   color: var(--ink);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .search-box input {
   width: 100%;
   border: 1px solid var(--line-strong);
-  border-radius: 12px;
-  background: rgba(255,255,255,0.05);
+  border-radius: 14px;
+  background: #f9fbff;
   color: var(--ink);
   outline: none;
-  padding: 12px 14px;
-  transition: border-color 0.18s ease, background 0.18s ease;
-}
-
-.search-box input::placeholder { color: var(--muted); }
-
-.search-box input:focus {
-  border-color: var(--accent);
-  background: rgba(234,88,12,0.06);
+  padding: 13px 14px;
 }
 
 .filter-label {
   display: block;
   margin-bottom: 9px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-/* ============================================================
-   Chip 筛选标签
-   ============================================================ */
 .chip-row {
   display: flex;
   flex-wrap: wrap;
@@ -357,32 +284,22 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .chip {
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255,255,255,0.06);
-  color: var(--muted);
-  cursor: pointer;
-  padding: 7px 13px;
-  font-size: 12px;
-  font-weight: 700;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-
-.chip:hover {
-  background: rgba(255,255,255,0.1);
+  background: #f9fbff;
   color: var(--ink);
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .chip.active {
   border-color: var(--accent);
   background: var(--accent);
   color: white;
-  box-shadow: 0 2px 10px rgba(234,88,12,0.35);
 }
 
-/* ============================================================
-   结果状态栏
-   ============================================================ */
 .results-bar {
   display: flex;
   align-items: baseline;
@@ -390,19 +307,16 @@ h1, h2, h3, p { margin-top: 0; }
   gap: 14px;
   margin: 20px 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .results-bar p { margin: 0; }
 #activeFilters { color: var(--accent); font-weight: 800; }
 
-/* ============================================================
-   案例 Grid / Card
-   ============================================================ */
 .case-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
   align-items: start;
 }
 
@@ -410,24 +324,16 @@ h1, h2, h3, p { margin-top: 0; }
   display: flex;
   flex-direction: column;
   border: 1px solid var(--line);
-  border-radius: 20px;
-  background: var(--surface);
-  box-shadow: var(--shadow-card);
+  border-radius: 22px;
+  background: white;
+  box-shadow: var(--shadow);
   overflow: hidden;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
-.case-card:hover {
-  border-color: var(--line-strong);
-  box-shadow: 0 6px 28px rgba(0,0,0,0.6);
-  transform: translateY(-2px);
-}
-
-/* 图片区 */
 .thumb {
   position: relative;
   aspect-ratio: 4 / 3;
-  background: #222;
+  background: #e5eaf2;
   overflow: hidden;
 }
 
@@ -436,43 +342,32 @@ h1, h2, h3, p { margin-top: 0; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
 }
 
-.case-card:hover .thumb img {
-  transform: scale(1.03);
-}
-
-/* 图片上的 badge */
 .badge {
   position: absolute;
-  left: 10px;
-  top: 10px;
+  left: 12px;
+  top: 12px;
   border-radius: 999px;
-  background: rgba(15,15,15,0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.9);
   color: var(--ink);
-  border: 1px solid var(--line-strong);
-  padding: 5px 9px;
-  font-size: 11px;
-  font-weight: 800;
+  padding: 6px 9px;
+  font-size: 12px;
+  font-weight: 850;
 }
 
-/* 卡片内容 */
 .case-body {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 10px;
-  padding: 16px 18px;
+  gap: 12px;
+  padding: 18px;
 }
 
 .case-title {
   margin: 0;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--ink);
+  font-size: 15px;
+  font-weight: 900;
 }
 
 .summary,
@@ -484,32 +379,29 @@ h1, h2, h3, p { margin-top: 0; }
 
 .summary {
   margin-bottom: 0;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .preview {
   margin-bottom: 0;
-  font-size: 12px;
+  font-size: 13px;
 }
 
-/* Tags */
 .tag-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 6px;
 }
 
 .tag {
   border-radius: 999px;
-  background: rgba(234,88,12,0.12);
-  border: 1px solid rgba(234,88,12,0.2);
-  color: #fb923c;       /* orange-400 */
-  padding: 4px 8px;
-  font-size: 11px;
-  font-weight: 700;
+  background: #eef2ff;
+  color: #475569;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: 800;
 }
 
-/* 卡片底部操作 */
 .case-actions {
   display: flex;
   align-items: center;
@@ -521,36 +413,24 @@ h1, h2, h3, p { margin-top: 0; }
 }
 
 .case-actions a {
-  color: var(--accent-2);
-  font-size: 12px;
-  font-weight: 800;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
   text-decoration: none;
-  transition: color 0.15s ease;
 }
 
-.case-actions a:hover {
-  color: white;
-}
-
-/* ============================================================
-   Details / Summary（高级筛选展开）
-   ============================================================ */
 details {
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 10px 12px;
-  background: rgba(255,255,255,0.03);
+  background: #f9fbff;
 }
 
 summary {
   cursor: pointer;
   font-size: 13px;
-  font-weight: 800;
-  color: var(--ink);
-  list-style: none;
+  font-weight: 900;
 }
-
-summary::-webkit-details-marker { display: none; }
 
 details.secondary-filters {
   border: none;
@@ -566,35 +446,25 @@ details.secondary-filters summary {
 }
 
 details.secondary-filters summary:hover {
-  color: var(--accent-2);
+  color: var(--accent);
 }
 
-/* ============================================================
-   pre 代码块
-   ============================================================ */
 pre {
   max-height: 340px;
   overflow: auto;
   white-space: pre-wrap;
   word-break: break-word;
-  color: #d4d4d4;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px;
+  color: #273244;
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 12px;
   line-height: 1.55;
 }
 
-/* ============================================================
-   图表面板（SVG 星图）
-   ============================================================ */
 .graph-panel {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow-card);
+  background: white;
+  box-shadow: var(--shadow);
   overflow: hidden;
 }
 
@@ -602,13 +472,12 @@ pre {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px 18px;
+  padding: 14px 18px;
   border-bottom: 1px solid var(--line);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
 }
 
 #constellation {
@@ -617,54 +486,30 @@ pre {
   height: 640px;
 }
 
-/* SVG 图表元素 */
-.graph-link { stroke: rgba(255,255,255,0.12); stroke-width: 1; }
+.graph-link { stroke: rgba(21, 19, 15, 0.15); stroke-width: 1; }
 .graph-node { cursor: pointer; transition: opacity 0.2s ease; }
-.graph-node:hover text { fill: var(--accent-2); }
-.graph-node circle { stroke: rgba(255,255,255,0.2); stroke-width: 1; fill: #1e1e1e; }
-.graph-node.active circle { stroke: var(--accent); stroke-width: 3; fill: rgba(234,88,12,0.15); }
+.graph-node:hover text { fill: var(--accent); }
+.graph-node circle { stroke: rgba(21, 19, 15, 0.24); stroke-width: 1; }
+.graph-node.active circle { stroke: var(--accent); stroke-width: 3; }
 .graph-label {
   fill: var(--ink);
-  font-family: 'Inter', ui-sans-serif, sans-serif;
+  font-family: ui-sans-serif, "Avenir Next", "Noto Sans SC", sans-serif;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 850;
   text-anchor: middle;
 }
-.graph-small { fill: var(--muted); font-size: 11px; font-weight: 600; }
+.graph-small { fill: var(--muted); font-size: 11px; font-weight: 750; }
 
 .graph-appendix {
   padding-bottom: 26px;
 }
 
-/* ============================================================
-   Footer
-   ============================================================ */
 .footer {
   padding: 26px clamp(18px, 5vw, 72px) 44px;
   color: var(--muted);
   font-size: 12px;
-  border-top: 1px solid var(--line);
 }
 
-/* ============================================================
-   "Secondary use case" 标签（来自 app.js 动态注入）
-   ============================================================ */
-.secondary-label {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--muted);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 2px 8px;
-  margin-left: 4px;
-  vertical-align: middle;
-}
-
-/* ============================================================
-   Responsive
-   ============================================================ */
 @media (max-width: 1280px) {
   .case-grid,
   .usecase-grid {
@@ -697,13 +542,12 @@ pre {
   }
 
   .source-link { display: none; }
-
   .hero-mini {
     margin-top: 32px;
   }
 
   .hero-mini h1 {
-    font-size: clamp(22px, 8vw, 32px);
+    font-size: clamp(24px, 8vw, 32px);
   }
 
   .case-grid, .usecase-grid { grid-template-columns: 1fr; }
