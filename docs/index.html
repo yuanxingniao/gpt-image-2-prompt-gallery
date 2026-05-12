@@ -1,68 +1,82 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>GPT Image 2 Viral Prompt Field Guide</title>
-    <meta name="description" content="A curated use-case map for viral GPT Image 2 prompts." />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <header class="site-header" id="top">
-      <nav class="topbar" aria-label="Site navigation">
-        <a class="brand" href="#top" aria-label="GPT Image 2 Viral Prompt Field Guide">
-          <span class="brand-mark">G2</span>
-          <span>GPT Image 2 Viral Prompt Field Guide</span>
-        </a>
-        <div class="topbar-meta" aria-label="Dataset summary">
-          <span><strong id="caseCount">62</strong> cases</span>
-          <span>9 families</span>
-          <span>9 grammar modules</span>
-        </div>
-        <a class="source-link" href="../README.md">Source gallery</a>
-      </nav>
 
-      <div class="hero-mini">
-        <h1>GPT-Image2 提示词参考站</h1>
-        <p class="intro-mini">
-          探索 Image 2 的核心生成能力：角色分身、风格转换、产品广告与视觉排版。
-        </p>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GPT Image 2 Viral Prompt Field Guide</title>
+  <meta name="description" content="A curated use-case map for viral GPT Image 2 prompts." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <header class="site-header" id="top">
+    <nav class="topbar" aria-label="Site navigation">
+      <a class="brand" href="#top" aria-label="GPT Image 2 Viral Prompt Field Guide">
+        <span class="brand-mark">G2</span>
+        <span>GPT Image 2 Viral Prompt Field Guide</span>
+      </a>
+      <div class="topbar-meta" aria-label="Dataset summary">
+        <span><strong id="caseCount">62</strong> cases</span>
+        <span>9 families</span>
+        <span>9 grammar modules</span>
       </div>
-    </header>
+      <a class="source-link" href="../README.md">Source gallery</a>
+    </nav>
 
-    <main>
+    <div class="hero-mini">
+      <h1>GPT-Image2 提示词参考站</h1>
+      <p class="intro-mini">
+        探索 Image 2 的核心生成能力：角色分身、风格转换、产品广告与视觉排版。
+      </p>
+      <a class="brand-by" href="https://creatok.ai" target="_blank" rel="noopener">
+        <svg class="brand-by__icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- C arc -->
+          <path d="M14 4C8.477 4 4 8.477 4 14s4.477 10 10 10c2.21 0 4.254-.718 5.91-1.927" stroke="#E8440A" stroke-width="2.6" stroke-linecap="round"/>
+          <!-- K shape -->
+          <path d="M16 9l-2.5 5 4.5 5" stroke="#E8440A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 14l-2.5 0" stroke="#E8440A" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-by__text">CreatOK <span class="brand-by__sub">出品</span></span>
+      </a>
+    </div>
+  </header>
 
-      <section class="section case-panel" aria-label="案例库">
+  <main>
 
-        <div class="filters" aria-label="Prompt filters">
-          <label class="search-box">
-            <span>搜索</span>
-            <input id="searchInput" type="search" placeholder="输入 chibi、poster、食物、case-0006..." />
-          </label>
-          <div>
-            <span class="filter-label">用途筛选</span>
-            <div class="chip-row" id="usecaseFilters"></div>
-          </div>
-          <details class="secondary-filters">
-            <summary>展开高级筛选：语法控制</summary>
-            <div class="chip-row" id="grammarFilters" style="margin-top: 12px;"></div>
-          </details>
-          <button class="ghost-button" id="clearFilters" type="button">Clear filters</button>
+    <section class="section case-panel" aria-label="案例库">
+
+      <div class="filters" aria-label="Prompt filters">
+        <label class="search-box">
+          <span>搜索</span>
+          <input id="searchInput" type="search" placeholder="输入 chibi、poster、食物、case-0006..." />
+        </label>
+        <div>
+          <span class="filter-label">用途筛选</span>
+          <div class="chip-row" id="usecaseFilters"></div>
         </div>
+        <details class="secondary-filters">
+          <summary>展开高级筛选：语法控制</summary>
+          <div class="chip-row" id="grammarFilters" style="margin-top: 12px;"></div>
+        </details>
+        <button class="ghost-button" id="clearFilters" type="button">Clear filters</button>
+      </div>
 
-        <div class="results-bar">
-          <p id="resultCount"></p>
-          <p id="activeFilters"></p>
-        </div>
-        <div class="case-grid" id="caseGrid"></div>
-      </section>
+      <div class="results-bar">
+        <p id="resultCount"></p>
+        <p id="activeFilters"></p>
+      </div>
+      <div class="case-grid" id="caseGrid"></div>
+    </section>
 
-    </main>
+  </main>
 
-    <footer class="footer">
-      <p>Images and prompts link back to their original public X/Twitter posts. This page is a research-oriented field guide built from the local gallery data.</p>
-    </footer>
+  <footer class="footer">
+    <p>Images and prompts link back to their original public X/Twitter posts. This page is a research-oriented field
+      guide built from the local gallery data.</p>
+  </footer>
 
-    <script src="./app.js"></script>
-  </body>
+  <script src="./app.js"></script>
+</body>
+
 </html>

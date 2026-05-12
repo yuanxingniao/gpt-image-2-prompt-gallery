@@ -142,6 +142,41 @@ h1, h2, h3, p { margin-top: 0; }
   overflow-wrap: anywhere;
 }
 
+.brand-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 5px 10px 5px 14px;
+  border-left: 3px solid #E8440A;
+  text-decoration: none;
+  opacity: 0.55;
+  transition: opacity 0.18s ease;
+}
+
+.brand-by:hover {
+  opacity: 1;
+}
+
+.brand-by__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.brand-by__text {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.brand-by__sub {
+  margin-left: 3px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 .section {
   padding: 44px clamp(18px, 5vw, 72px);
 }
