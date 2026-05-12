@@ -665,6 +665,44 @@ h1, h2, h3, p { margin-top: 0; }
   font-weight: 850;
 }
 
+.badge-cross {
+  left: auto;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.case-card--cross {
+  border-color: var(--line);
+  opacity: 0.82;
+}
+
+.case-card--cross:hover {
+  opacity: 1;
+}
+
+.secondary-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.secondary-divider::before,
+.secondary-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line-strong);
+}
+
 .case-body {
   display: flex;
   flex: 1;
@@ -924,9 +962,15 @@ function matchesCase(item) {{
 }}
 
 function sortedCases() {{
-  return FIELD_GUIDE.cases
-    .filter(matchesCase)
-    .sort((a, b) => Number(b.featured) - Number(a.featured) || a.id.localeCompare(b.id));
+  const filtered = FIELD_GUIDE.cases.filter(matchesCase);
+  if (state.useCase === "all") {{
+    return filtered.sort((a, b) => Number(b.featured) - Number(a.featured) || a.id.localeCompare(b.id));
+  }}
+  // primary 案例排前，secondary（延伸参考）排后
+  const primary = filtered.filter(item => item.primary_use_case === state.useCase);
+  const secondary = filtered.filter(item => item.primary_use_case !== state.useCase);
+  const sort = (a, b) => Number(b.featured) - Number(a.featured) || a.id.localeCompare(b.id);
+  return [...primary.sort(sort), ...secondary.sort(sort)];
 }}
 
 function renderUseCases() {{
@@ -988,17 +1032,35 @@ function renderCases() {{
   const useLabel = state.useCase === "all" ? "全部用途" : useCaseById.get(state.useCase)?.name;
   const grammarLabel = state.grammar === "all" ? "全部语法" : grammarById.get(state.grammar)?.name;
   byId("activeFilters").textContent = `${{useLabel}} / ${{grammarLabel}}`;
+
+  // 找出分隔点：primary 结束、secondary 开始的索引
+  let dividerIndex = -1;
+  if (state.useCase !== "all") {{
+    dividerIndex = cases.findIndex(item => item.primary_use_case !== state.useCase);
+  }}
+
   byId("caseGrid").innerHTML = cases
-    .map((item) => {{
+    .map((item, index) => {{
       const primary = useCaseById.get(item.primary_use_case);
+      const isSecondary = state.useCase !== "all" && item.primary_use_case !== state.useCase;
       const tags = item.grammar_tags
         .map((tag) => `<span class="tag">${{grammarById.get(tag)?.name || tag}}</span>`)
         .join("");
-      const featured = item.featured ? `<span class="badge">Featured</span>` : `<span class="badge">${{primary.name}}</span>`;
-      return `<article class="case-card">
+      const badgeLabel = item.featured ? "Featured" : primary.name;
+      const featured = `<span class="badge">${{badgeLabel}}</span>`;
+      // 延伸参考标识：出现在右上角
+      const crossBadge = isSecondary
+        ? `<span class="badge badge-cross">延伸参考</span>`
+        : "";
+      // 分隔线：在第一个 secondary 案例前插入
+      const divider = (index === dividerIndex)
+        ? `<div class="secondary-divider" style="grid-column: 1 / -1;"><span>以下案例也适用于此场景，但主要归属其他用途</span></div>`
+        : "";
+      return divider + `<article class="case-card ${{isSecondary ? "case-card--cross" : ""}}">
         <div class="thumb">
           <img src="${{item.image}}" alt="${{escapeHtml(item.title)}}" loading="lazy" />
           ${{featured}}
+          ${{crossBadge}}
         </div>
         <div class="case-body">
           <h3 class="case-title">${{item.id}} · ${{primary.name}}</h3>
